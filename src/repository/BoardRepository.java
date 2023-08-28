@@ -15,6 +15,17 @@ public class BoardRepository {
         return boardDTOList;
     }
 
+    public boolean boardHits(Long id) {
+        for(BoardDTO boardDTO: boardDTOList){
+            if(id == boardDTO.getId()){
+                Long i = boardDTO.getBoardHit();
+                i = i+1;
+                boardDTO.setBoardHit(i);
+                return true;
+            }
+        }
+        return false;
+    }
 
     public BoardDTO findById(Long id) {
         for(BoardDTO boardDTO : boardDTOList){
@@ -28,6 +39,7 @@ public class BoardRepository {
     public BoardDTO update(Long id, String pass) {
         for(BoardDTO boardDTO: boardDTOList){
             if(id == boardDTO.getId() && pass.equals(boardDTO.getBoardPass())) {
+                boardDTO.setBoardHit(boardDTO.getBoardHit() + 1);
                 return boardDTO;
             }
         }
@@ -52,4 +64,6 @@ public class BoardRepository {
         }
         return null;
     }
+
+
 }

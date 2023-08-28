@@ -41,12 +41,12 @@ public class BoardService {
         list();
         System.out.print("검색할 번호 입력:");
         Long id = scanner.nextLong();
-        BoardDTO boardDTO= boardRepository.findById(id);
-        if(boardDTO != null){
-            boardDTO.setBoardHit(boardDTO.getBoardHit() + 1);
+        boolean result = boardRepository.boardHits(id);
+        if(result){
 //        Long i = boardDTO.getBoardHit();
 //        i ++;
 //        boardDTO.setBoardHit(i);
+            BoardDTO boardDTO = boardRepository.findById(id);
             System.out.print("제목: " + boardDTO.getBoardTitle() +"/");
             System.out.print("작성자: " + boardDTO.getBoardWriter() +"/");
             System.out.print("내용: " + boardDTO.getBoardContents() +"/");
@@ -111,5 +111,13 @@ public class BoardService {
             System.out.println("검색내용이 없습니다.");
         }
 
+    }
+
+    public void sampleData() {
+        for(int i = 1; i<=10; i++){
+            BoardDTO boardDTO =
+                    new BoardDTO("title"+i, "writer" + i, "contents"+i, "pass"+i);
+            boardRepository.insert(boardDTO);
+        }
     }
 }

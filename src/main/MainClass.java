@@ -12,7 +12,7 @@ public class MainClass {
         boolean run = true;
         while(run){
             System.out.println("------------------------------------------------------");
-            System.out.println("1.글작성 2.글목록 3.글조회 4.글수정 5.글삭제 6.검색 0.종료");
+            System.out.println("1.글작성 2.글목록 3.글조회 4.글수정 5.글삭제 6.검색 7.샘플데이터 0.종료");
             System.out.println("------------------------------------------------------");
             System.out.print("메뉴선택> ");
             int sel = scanner.nextInt();
@@ -35,9 +35,14 @@ public class MainClass {
             }else if(sel == 6){
                 System.out.println("검색");
                 boardService.search();
-            }else{
+            }else if(sel== 7){
+                System.out.println("샘플데이터");
+                boardService.sampleData();
+            }else if(sel == 0){
                 System.out.println("프로그램 종료");
                 run = false;
+            }else{
+                System.out.println("다시입력");
             }
 
         }
