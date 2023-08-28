@@ -4,66 +4,65 @@ import dto.BoardDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class BoardRepository {
+    Scanner scanner = new Scanner(System.in);
     List<BoardDTO> boardDTOList = new ArrayList<>();
-    public boolean insert(BoardDTO boardDTO) {
-       return boardDTOList.add(boardDTO);
+    public boolean save(BoardDTO boardDTO) {
+        return boardDTOList.add(boardDTO);
     }
 
-    public List<BoardDTO> list() {
+    public List<BoardDTO> findAll() {
         return boardDTOList;
     }
 
-    public boolean boardHits(Long id) {
-        for(BoardDTO boardDTO: boardDTOList){
-            if(id == boardDTO.getId()){
-                Long i = boardDTO.getBoardHit();
-                i = i+1;
-                boardDTO.setBoardHit(i);
+    public boolean boardHits(long findId) {
+        for (BoardDTO boardDTO: boardDTOList) {
+            if (findId == boardDTO.getId()) {
+                int hits = boardDTO.getBoardHits();
+                hits = hits + 1;
+                boardDTO.setBoardHits(hits);
                 return true;
             }
         }
         return false;
     }
 
-    public BoardDTO findById(Long id) {
-        for(BoardDTO boardDTO : boardDTOList){
-            if(id == boardDTO.getId()){
+    public BoardDTO findById(long findId) {
+        for (BoardDTO boardDTO: boardDTOList) {
+            if (findId == boardDTO.getId()) {
                 return boardDTO;
             }
         }
         return null;
     }
 
-    public BoardDTO update(Long id, String pass) {
-        for(BoardDTO boardDTO: boardDTOList){
-            if(id == boardDTO.getId() && pass.equals(boardDTO.getBoardPass())) {
-                boardDTO.setBoardHit(boardDTO.getBoardHit() + 1);
-                return boardDTO;
+    public void update(long findId, String boardTitle, String boardContents) {
+        for (BoardDTO boardDTO: boardDTOList) {
+            if (findId == boardDTO.getId()) {
+                boardDTO.setBoardTitle(boardTitle);
+                boardDTO.setBoardContents(boardContents);
             }
         }
-        return null;
     }
 
-    public BoardDTO delete(Long id, String pass) {
-        for(BoardDTO boardDTO : boardDTOList){
-            if(id == boardDTO.getId() && pass.equals(boardDTO.getBoardPass())) {
+    public void delete(long findId) {
+        for (BoardDTO boardDTO: boardDTOList) {
+            if (findId == boardDTO.getId()) {
                 boardDTOList.remove(boardDTO);
-                return boardDTO;
             }
         }
-        return null;
     }
 
-    public BoardDTO search(String title) {
-        for(BoardDTO boardDTO: boardDTOList){
-            if(title.equals(boardDTO.getBoardTitle())){
-                return boardDTO;
+    public List<BoardDTO> search(String q) {
+        // 검색결과를 담을 리스트
+        List<BoardDTO> searchList = new ArrayList<>();
+        for (BoardDTO boardDTO: boardDTOList) {
+            if (q.equals(boardDTO.getBoardTitle())) {
+                searchList.add(boardDTO);
             }
         }
-        return null;
+        return searchList;
     }
-
-
 }
